@@ -1,0 +1,41 @@
+{
+  "name": "kntnt-ma-engagement-metrics",
+  "version": "1.0.0",
+  "description": "Engagement Metrics for Matomo Analytics by Kntnt",
+  "main": "dist/js/kntnt-ma-engagement-metrics.min.js",
+  "scripts": {
+    "html-copy": "npx cpy src/index.html dist/ && npx replace kntnt-ma-engagement-metrics.js kntnt-ma-engagement-metrics.min.js dist/index.html",
+    "build": "npx rollup -c && npm run html-copy",
+    "build-production": "NODE_ENV=production npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "staging": "scp -r dist staging:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:Kntnt Sweden AB/kntnt-ma-engagement-metrics"
+  },
+  "author": "Thomas barregren <thomas@kntnt.com>",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Kntnt Sweden AB/kntnt-ma-engagement-metrics/issues"
+  },
+  "homepage": "https://github.com/Kntnt Sweden AB/kntnt-ma-engagement-metrics#readme",
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "cpy-cli": "^2.0.0",
+    "eslint": "^5.7.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "replace": "^1.0.0",
+    "rollup": "^0.66.6",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-eslint": "^5.0.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-uglify": "^6.0.0"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0"
+  }
+}
