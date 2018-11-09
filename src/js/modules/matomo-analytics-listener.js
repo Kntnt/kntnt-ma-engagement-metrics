@@ -13,74 +13,74 @@ export default class extends AbstractListener {
       // An array of percentages. When the reading ratio has reached
       // or exceeded a percentage, a reading time event is sent.
       // An empty array disables scanning depth events.
-      gaReadingTimeEvents: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+      maReadingTimeEvents: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
 
       // An array of percentages. When the scanning ratio has reached
       // or exceeded a percentage, a reading time event is sent.
       // An empty array disables scanning depth events.
-      gaScanningDepthEvents: [25, 50, 75, 100],
+      maScanningDepthEvents: [25, 50, 75, 100],
 
       // The Matomo Analytics category name used by both
       // the reading time events and the scanning depth events.
-      gaCategory: 'Articles',
+      maCategory: 'Articles',
 
       // The  Matomo Analytics action name used by the reading time
       // event. The placeholder {0} is replaced with the highest
-      // percentage in gaReadingTimeEvents less than or equal
+      // percentage in maReadingTimeEvents less than or equal
       // to the current reading ratio.
-      gaReadingTimeEventName: 'Reading {0}%',
+      maReadingTimeEventName: 'Reading {0}%',
 
       // The  Matomo Analytics action name used by the scanning depth
       // event. The placeholder {0} is replaced with the highest
-      // percentage in gaScanningDepthEvents less than or equal
+      // percentage in maScanningDepthEvents less than or equal
       // to the current scanning ratio.
-      gaScanningDepthEventName: 'Scanning {0}%',
+      maScanningDepthEventName: 'Scanning {0}%',
 
       // When a reading time event is sent to GA, the customer
       // dimension with this name (e.g. dimension1) is assigned
       // the event's name (see above). Leave empty to disable.
-      gaReadingTimeDimensionSlot: '',
+      maReadingTimeDimensionSlot: '',
 
       // When a scrolling depth event is sent to GA, the customer
       // dimension with this name (e.g. dimension2) is assigned
       // the event's name (see above). Leave empty to disable.
-      gaScanningDepthDimensionSlot: '',
+      maScanningDepthDimensionSlot: '',
 
       // When an event is sent to GA, the customer metric with this
       // name (e.g. metric1) is assigned the current reading time in
       // seconds. Leave empty to disable.
-      gaReadingTimeMetricSlot: '',
+      maReadingTimeMetricSlot: '',
 
       // When an event is sent to GA, the customer metric with this
       // name (e.g. metric2) is assigned the current reading length
       // in characters. Leave empty to disable.
-      gaReadingLengthMetricSlot: '',
+      maReadingLengthMetricSlot: '',
 
       // When an event is sent to GA, the customer metric with this
       // name (e.g. metric3) is assigned the current scanning depth
       // in pixels. Leave empty to disable.
-      gaScanningDepthMetricSlot: '',
+      maScanningDepthMetricSlot: '',
 
       // When an event is sent to GA, the customer metric with this
       // name (e.g. metric4) is assigned the current reading ratio in
       // percentage. Leave empty to disable.
-      gaReadingRatioMetricSlot: '',
+      maReadingRatioMetricSlot: '',
 
       // When an event is sent to GA, the customer metric with this
       // name (e.g. metric5) is assigned the current reading time in
       // percentage. Leave empty to disable.
-      gaScanningRatioMetricSlot: '',
+      maScanningRatioMetricSlot: '',
 
       // Minimum percentage read for non-bounce. That is, events
       // sent up til but not including this reading ratio (in
       // percent) are non-interactive, and thereafter interactive.
-      gaBounceLimit: 10,
+      maBounceLimit: 10,
 
     };
 
     // The function send(action, label, value, fields, nonInteraction)
     // sends Matomo Analytics an event with the provided action, label
-    // and value. Category is set to settings.gaCategory. Fields should
+    // and value. Category is set to settings.maCategory. Fields should
     // be a possible empty object with key/value pairs also sent to
     // Matomo Analytics. The event is interactive if and only if
     // nonInteraction == false.
@@ -96,34 +96,34 @@ export default class extends AbstractListener {
 
     // Declaration of the action names of the reading time events.
     // Is set in run().
-    this.gaReadingTimeEventNames = {};
+    this.maReadingTimeEventNames = {};
 
     // Declaration of the action names of the scanning depth events.
     // Is set in run().
-    this.gaScanningDepthEventNames = {};
+    this.maScanningDepthEventNames = {};
 
   }
 
   // A possible empty key/value-object where keys are Matomo Analytics'
   // slot names for custom dimensions and values are their corresponding
   // current values.
-  get gaDimensions() {
-    return this.gaCustomData({
-      gaReadingTimeDimensionSlot: 'readingTime',
-      gaScanningDepthDimensionSlot: 'scanningDepth',
+  get maDimensions() {
+    return this.maCustomData({
+      maReadingTimeDimensionSlot: 'readingTime',
+      maScanningDepthDimensionSlot: 'scanningDepth',
     });
   }
 
   // A possible empty key/value-object where keys are Matomo Analytics'
   // slot names for custom metrics and values are their corresponding
   // current values.
-  get gaMetrics() {
-    return this.gaCustomData({
-      gaReadingTimeMetricSlot: 'readingTime',
-      gaReadingLengthMetricSlot: 'readingLength',
-      gaScanningDepthMetricSlot: 'scanningDepth',
-      gaReadingRatioMetricSlot: 'readingRatio',
-      gaScanningRatioMetricSlot: 'scanningRatio',
+  get maMetrics() {
+    return this.maCustomData({
+      maReadingTimeMetricSlot: 'readingTime',
+      maReadingLengthMetricSlot: 'readingLength',
+      maScanningDepthMetricSlot: 'scanningDepth',
+      maReadingRatioMetricSlot: 'readingRatio',
+      maScanningRatioMetricSlot: 'scanningRatio',
     });
   }
 
@@ -134,10 +134,10 @@ export default class extends AbstractListener {
     this.settings = Object.assign({}, this.settings, settings); // Cannot use this._settings = {...this._settings, ...settings} because Babel don't yet support literal object spreading introduced in ES2018.
 
     // Generate reading time event's names.
-    this.gaReadingTimeEventNames = this.settings.gaReadingTimeEvents.map(percentage => this.constructor.format(this.settings.gaReadingTimeEventName, percentage));
+    this.maReadingTimeEventNames = this.settings.maReadingTimeEvents.map(percentage => this.constructor.format(this.settings.maReadingTimeEventName, percentage));
 
     // Generate scanning depth event's names.
-    this.gaScanningDepthEventNames = this.settings.gaScanningDepthEvents.map(percentage => this.constructor.format(this.settings.gaScanningDepthEventName, percentage));
+    this.maScanningDepthEventNames = this.settings.maScanningDepthEvents.map(percentage => this.constructor.format(this.settings.maScanningDepthEventName, percentage));
 
     // The title of his article.
     this.title = window.document.getElementsByTagName('title')[0].innerHTML;
@@ -151,14 +151,14 @@ export default class extends AbstractListener {
   report() {
 
     // Report reading time.
-    while (this.metrics.readingRatio >= this.settings.gaReadingTimeEvents[this.readingTimeEventCounter]) {
-      this.send(this.gaReadingTimeEventNames[this.readingTimeEventCounter], this.metrics.readingTime);
+    while (this.metrics.readingRatio >= this.settings.maReadingTimeEvents[this.readingTimeEventCounter]) {
+      this.send(this.maReadingTimeEventNames[this.readingTimeEventCounter], this.metrics.readingTime);
       this.readingTimeEventCounter += 1;
     }
 
     // Report scanning depth.
-    while (this.metrics.scanningRatio >= this.settings.gaScanningDepthEvents[this.scanningDepthEventCounter]) {
-      this.send(this.gaScanningDepthEventNames[this.scanningDepthEventCounter], this.metrics.scanningDepth);
+    while (this.metrics.scanningRatio >= this.settings.maScanningDepthEvents[this.scanningDepthEventCounter]) {
+      this.send(this.maScanningDepthEventNames[this.scanningDepthEventCounter], this.metrics.scanningDepth);
       this.scanningDepthEventCounter += 1;
     }
 
@@ -178,7 +178,7 @@ export default class extends AbstractListener {
   // a key/value-object where keys are Matomo Analytics' slot names for
   // custom dimensions or metrics and values are their corresponding
   // current values.
-  gaCustomData(relations) {
+  maCustomData(relations) {
     return Object.assign(...Object.entries(relations)
       .map(([slotName, metricName]) => (this.settings[slotName] ? { [this.settings[slotName]]: this.metrics[metricName] } : {})));
   }
@@ -194,8 +194,8 @@ export default class extends AbstractListener {
   }
 
   send(action, value) {
-    const fields = Object.assign({}, this.gaDimensions, this.gaMetrics); // Cannot use { ...this.gaDimensions, ...this.gaMetrics } because Babel don't yet support literal object spreading introduced in ES2018.
-    this.sendAPI(action, this.title, value, fields, this.metrics.readingRatio < this.settings.gaBounceLimit);
+    const fields = Object.assign({}, this.maDimensions, this.maMetrics); // Cannot use { ...this.maDimensions, ...this.maMetrics } because Babel don't yet support literal object spreading introduced in ES2018.
+    this.sendAPI(action, this.title, value, fields, this.metrics.readingRatio < this.settings.maBounceLimit);
   }
 
   API() {
@@ -214,8 +214,8 @@ export default class extends AbstractListener {
   // Matomo Tag Manager tracking
   sendDataLayer(action, label, value, fields, nonInteraction) {
     window.dataLayer.push(Object.assign({
-      event: 'gaEvent',
-      eventCategory: this.settings.gaCategory,
+      event: 'maEvent',
+      eventCategory: this.settings.maCategory,
       eventAction: label,
       eventLabel: label,
       eventValue: value,
@@ -226,7 +226,7 @@ export default class extends AbstractListener {
   // Global site tag tracking
   sendGTag(action, label, value, fields, nonInteraction) {
     window.gtag('event', action, Object.assign({
-      event_category: this.settings.gaCategory,
+      event_category: this.settings.maCategory,
       event_label: label,
       value,
       non_interaction: nonInteraction,
@@ -235,13 +235,13 @@ export default class extends AbstractListener {
 
   // Matomo Analytics Universal tracking
   sendGA(action, label, value, fields, nonInteraction) {
-    window.ga('send', 'event', this.settings.gaCategory, action, label, value, Object.assign({ nonInteraction }, fields));
+    window.ga('send', 'event', this.settings.maCategory, action, label, value, Object.assign({ nonInteraction }, fields));
   }
 
   // Default when no tracking code is found.
   sendConsole(action, label, value, fields, nonInteraction) {
     const data = Object.assign({
-      category: this.settings.gaCategory,
+      category: this.settings.maCategory,
       action,
       label,
       value,
