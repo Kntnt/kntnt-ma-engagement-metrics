@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/Kntnt Sweden AB/kntnt-ma-engagement-metrics#readme",
   "devDependencies": {
-    "@babel/core": "^7.1.2",
+    "@babel/core": "^7.20.7",
     "@babel/preset-env": "^7.1.0",
     "cpy-cli": "^2.0.0",
     "eslint": "^5.7.0",
